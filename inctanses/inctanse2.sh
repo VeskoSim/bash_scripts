@@ -53,15 +53,16 @@ SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=default-for-az,Values=true"
 log "Found Subnet ID: $SUBNET_ID"
 
 # Step 4: Specify or create a key pair
-KEY_NAME="MyWebAppKey"
+KEY_NAME="Accesskey"
 log "Creating Key Pair with name: $KEY_NAME..."
 if aws ec2 describe-key-pairs --key-names "$KEY_NAME" &>/dev/null; then
   log "Key Pair $KEY_NAME already exists."
 else
-  aws ec2 create-key-pair --key-name "$KEY_NAME" --query "KeyMaterial" --output text > "$KEY_NAME.pem"
-  chmod 400 "$KEY_NAME.pem"
-  log "Created Key Pair and saved to $KEY_NAME.pem"
+  aws ec2 create-key-pair --key-name "$KEY_NAME" --query "KeyMaterial" --output text > "~/Documents/VeselinSimeonov/keys/$KEY_NAME.pem"
+  chmod 400 "~/Documents/VeselinSimeonov/keys/$KEY_NAME.pem"
+  log "Created Key Pair and saved to ~/Documents/VeselinSimeonov/keys/$KEY_NAME.pem"
 fi
+
 
 # Step 5: Launch the EC2 Instance
 log "Launching EC2 instance..."
